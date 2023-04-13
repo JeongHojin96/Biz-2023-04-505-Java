@@ -1,0 +1,16 @@
+로컬->깃허브 : 원격 rep (upload -> push // download -> pull)
+.git -> local rep 로 정의 -> 암호화, 저장 및 압축 임시 폴더
+업로드 코드 
+echo "# Biz-2023-04-Java" >> README.md 
+원격 연결 시작 초기화 : git init 
+git add README.md 
+
+git commit -m "첫 커밋" 
+git branch -M master 
+git remote add origin https://github.com/JeongHojin96/ Biz-2023-04-Java.git
+git push -u origin master
+
+빨강 = 키워드
+노랑 = 매소드
+파랑 = 클래스
+비스듬한 핑크 = 객체
