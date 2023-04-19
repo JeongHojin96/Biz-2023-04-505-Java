@@ -14,3 +14,4 @@ git push -u origin master
 노랑 = 매소드
 파랑 = 클래스
 비스듬한 핑크 = 객체
+dasfa
