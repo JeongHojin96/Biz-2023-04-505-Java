@@ -37,9 +37,9 @@ public class ControllerI {
 			} else {
 				System.err.println(mrNum + " = 소수아님");
 			}
-			if (pirme()) {
-				System.out.println("소수");
+	//		if (pirme()) {
+	//			System.out.println("소수");
 			}
 		}
 	}
-}
+//}
