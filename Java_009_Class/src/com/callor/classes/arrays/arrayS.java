@@ -28,28 +28,22 @@ public class arrayS {
 		System.out.println("=".repeat(70));
 		System.out.println("학번	이름	국어	영어	수학	총점	평균");
 
+		int sumKor = 0;
+		int sumEng = 0;
+		int sumMath = 0;
 		for (int i = 0; i < scores.length; i++) {
 			scores[i].stNum = 1000 + i;
 			scores[i].scKor = scoreService.getScore();
 			scores[i].scEng = scoreService.getScore();
 			scores[i].scMath = scoreService.getScore();
-		}
-		for (int i = 0; i < scores.length; i++) {
 			scoreService.scoreprint(scores[i]);
-		}
-
-		System.out.println("=".repeat(70));
-
-		int sumKor = 0;
-		int sumEng = 0;
-		int sumMath = 0;
-		for (int i = 0; i < scores.length; i++) {
 			sumKor += scores[i].scKor;
 			sumEng += scores[i].scEng;
-			sumMath += scores[i].scMath;
+			sumMath += scores[i].scMath;			
 		}
 		
+		System.out.println("=".repeat(70));	
 		System.out.print("		" + sumKor + "	" + sumEng + "	" + sumMath + "	" + (sumKor + sumEng + sumMath));
-		
+	
 	}
 }
