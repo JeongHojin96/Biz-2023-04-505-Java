@@ -13,14 +13,14 @@ import com.callor.books.service.AuthorService;
 
 public class AuthorServiceImplV1 implements AuthorService {
 
-	protected List<AuthorDto> authorList;
+	protected List<GuideDto> guideList;
 
 	public AuthorServiceImplV1() {
 		authorList = new ArrayList<>();
 	}
 	
 	public void loadAuthor() {
-		String AuthorFile = "src/com/callor/books/data/저자정보(2023-05-11).txt";
+		String AuthorFile = "src/guide.txt";
 		InputStream is = null;
 		Scanner scan = null;
 

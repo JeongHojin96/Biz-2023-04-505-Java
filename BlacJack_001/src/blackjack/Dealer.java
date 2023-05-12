@@ -20,7 +20,7 @@ public class Dealer implements Player {
 			this.cards.add(card);
 			this.showCards();
 		} else {
-			System.out.println("카드의 총 합이 17이상입니다. 더이상 카드를 받을 수 없습니다.");
+			System.err.println("카드합이 17이상 카드를 받을 수 없습니다.");
 		}
 	}
 
@@ -40,7 +40,7 @@ public class Dealer implements Player {
 	@Override
 	public void showCards() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("현재 보유 카드 목록 \n");
+		sb.append("현재 보유 카드 목록 \t");
 
 		for (Card card : cards) {
 			sb.append(card.toString());

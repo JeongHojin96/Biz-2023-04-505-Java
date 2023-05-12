@@ -22,7 +22,7 @@ public class Gamer implements Player {
 	@Override
 	public void showCards() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("현재 보유 카드 목록 \n");
+		sb.append("현재 보유 카드 목록 \t");
 
 		for (Card card : cards) {
 			sb.append(card.toString());

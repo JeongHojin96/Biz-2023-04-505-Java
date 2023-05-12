@@ -113,7 +113,7 @@ public class BlackJack {
 //		}
 
 //		블랙잭 확인용
-		for(int i=0;i<2;i++) {
+		for (int i = 0; i < 2; i++) {
 			deck.add(1);
 			deck.add(10);
 			deck.add(1);
