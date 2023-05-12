@@ -10,6 +10,7 @@ public class AuthorExeCA {
 		
 		atSerV1.loadAuthor();
 		atSerV1.printAuthorList();
+		atSerV1.getAuthor("A0011");
 		
 	}
 }

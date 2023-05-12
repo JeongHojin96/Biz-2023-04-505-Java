@@ -9,10 +9,7 @@ import java.util.Scanner;
 
 import com.callor.books.config.DataIndex;
 import com.callor.books.models.AuthorDto;
-import com.callor.books.models.BookDto;
 import com.callor.books.service.AuthorService;
-import com.callor.books.service.BookService;
-import com.callor.classes.models.StudentDto;
 
 public class AuthorServiceImplV1 implements AuthorService {
 

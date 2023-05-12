@@ -3,38 +3,20 @@ package blackjack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dealer implements Player {
+public class Gamer implements Player {
 	private List<Card> cards;
 	private boolean turn;
+	private String name;
 
-	private static final int CAN_RECEIVE_POINT = 16;
-	private static final String NAME = "딜러";
-
-	public Dealer() {
-		cards = new ArrayList<>();
+	public Gamer(String name) {
+		this.cards = new ArrayList<>();
+		this.name = name;
 	}
 
 	@Override
 	public void receiveCard(Card card) {
-		if (this.isReceiveCard()) {
-			this.cards.add(card);
-			this.showCards();
-		} else {
-			System.out.println("카드의 총 합이 17이상입니다. 더이상 카드를 받을 수 없습니다.");
-		}
-	}
-
-	private boolean isReceiveCard() {
-		return getPointSum() <= CAN_RECEIVE_POINT;
-	}
-
-	private int getPointSum() {
-		int sum = 0;
-		for (Card card : cards) {
-			sum += card.getDenomination().getPoint();
-		}
-
-		return sum;
+		this.cards.add(card);
+		this.showCards();
 	}
 
 	@Override
@@ -76,6 +58,6 @@ public class Dealer implements Player {
 
 	@Override
 	public String getName() {
-		return NAME;
+		return this.name;
 	}
 }
