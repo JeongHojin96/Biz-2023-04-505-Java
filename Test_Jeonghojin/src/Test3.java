@@ -26,8 +26,6 @@ public class Test3 {
 				primeList.add(list);
 			}
 		}
-		System.out.println(numList);
-		System.out.println(primeList);
 		System.out.println("소수 개수 : " + pCount);
 		System.out.println("소수의 합 : " + sPrime);
 	}

@@ -23,14 +23,14 @@ public class BlackjackGame {
 	}
 
 	public void startGame() {
-		System.out.println("블랙잭 시작.");
+		System.out.println("블랙잭 시작");
+
+		boolean gameOver = false;
+		boolean tokenOver = false;
 
 		initializeDeck();
 		shuffleDeck();
 		initialDeal();
-
-		boolean gameOver = false;
-
 		while (!gameOver) {
 			System.out.println("플레이어 손패: " + playerHand + ", 점수: " + playerScore);
 			System.out.println("딜러 손패: " + dealerHand.get(0) + ", ?");
@@ -51,7 +51,7 @@ public class BlackjackGame {
 					gameOver = true;
 					showResult();
 				}
-			} else {
+			} else if (input.equalsIgnoreCase("N")) {
 				gameOver = true;
 				while (dealerScore < 17) {
 					hit(dealerHand);
@@ -60,8 +60,8 @@ public class BlackjackGame {
 				showResult();
 			}
 		}
-
 		scanner.close();
+
 	}
 
 	private void initializeDeck() {
@@ -146,6 +146,7 @@ public class BlackjackGame {
 	}
 
 	public static void main(String[] args) {
+
 		BlackjackGame game = new BlackjackGame();
 		game.startGame();
 	}
