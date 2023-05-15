@@ -26,10 +26,38 @@ public class BlackjackGame2 {
 		scanner = new Scanner(System.in);
 	}
 
-	public void startGame() {
-		System.out.println("* BlackJack *");
+	public void rule() {
+		System.out.println("# 규칙 설명 #");
+		System.out.println("1. 유저와 딜러에게 각각 5코인씩 지급");
+		System.out.println("   게임 승리시 +1 코인 패배시 -1 코인");
+		System.out.println("   보유 코인이 0이 되면 Game Over가 됩니다.\n");
+		System.out.println("2. 시작 시 두장의 카드를 뽑습니다.   ");
+		System.out.println("   보유 카드가 21이 될때까지 카드를 계속 뽑을 수 있습니다.");
+		System.out.println("   보유 카드의 합이 21이 되면 승리하고, 초과하면 패배합니다.");
+		System.out.println("   결과 확인시 보유 카드의 합이 21에 가까운 사람이 승리합니다.\n");
+		System.out.println("3. ACE카드는 11점으로 계산합니다.   ");
+		System.out.println("   보유 카드의 합이 21점을 넘으면 ACE카드는 1점으로 계산합니다.");
+		System.out.println("4. J, Q, K 카드의 점수는 10점으로 계산합니다.   ");
+	}
 
-		boolean tokenOver = false;
+	public void startGame() {
+		boolean tokenOver;
+		System.out.println("* BlackJack *");
+		System.out.println("게임 시작(S) 게임 규칙(T) 게임 종료(Q)");
+
+		while (true) {
+			String start = scanner.nextLine();
+			if (start.equalsIgnoreCase("S")) {
+				tokenOver = false;
+				break;
+			} else if (start.equalsIgnoreCase("T")) {
+				rule();
+				System.out.println("\n게임 시작(S) 게임 규칙(T) 게임 종료(Q)");
+			} else if (start.equalsIgnoreCase("Q")) {
+				tokenOver = true;
+				break;
+			}
+		}
 
 		while (!tokenOver) {
 			initializeDeck();
@@ -40,8 +68,8 @@ public class BlackjackGame2 {
 
 			System.out.println("-".repeat(30));
 			while (!gameOver) {
-				System.out.println("유저 손패 : " + playerHand + ", 점수: " + playerScore);
 				System.out.println("딜러 손패 : " + dealerHand.get(0) + ", ?");
+				System.out.println("유저 손패 : " + playerHand + ", 점수: " + playerScore);
 
 				if (playerScore == 21 || dealerScore == 21) {
 					gameOver = true;
@@ -49,7 +77,7 @@ public class BlackjackGame2 {
 					break;
 				}
 
-				System.out.print("\n카드 받기 (Y/N/Q) ");
+				System.out.print("\n카드 받기(Y) 결과 확인(N) 게임 종료(Q) ");
 				String input = scanner.nextLine();
 
 				if (input.equalsIgnoreCase("Y")) {
@@ -67,7 +95,7 @@ public class BlackjackGame2 {
 					}
 					showResult();
 				} else if (input.equalsIgnoreCase("Q")) {
-					System.out.print("\n종료시 모든 코인을 잃습니다. (Y/N) ");
+					System.err.print("\n종료시 모든 코인을 잃습니다. 종료(Y) 재시작(N)");
 					input = scanner.nextLine();
 					if (input.equalsIgnoreCase("Y")) {
 						playerCoin = 0;
@@ -159,39 +187,41 @@ public class BlackjackGame2 {
 			score -= 10;
 			aceCount--;
 		}
-
 		return score;
 	}
 
 	private void showResult() {
-		System.out.println("유저 손패: " + playerHand + ", 점수: " + playerScore);
 		System.out.println("딜러 손패: " + dealerHand + ", 점수: " + dealerScore);
+		System.out.println("유저 손패: " + playerHand + ", 점수: " + playerScore);
 
 		if (playerScore > 21) {
 			playerCoin += -1;
 			dealerCoin += 1;
 			System.err.println("\n유저가 21을 넘겼습니다. 딜러 승!\n");
 			System.out.println("남은 코인\n유저 : " + playerCoin + "\n딜러 : " + dealerCoin);
+
 		} else if (dealerScore > 21) {
 			playerCoin += 1;
 			dealerCoin += -1;
-			System.err.println("\n딜러가 21을 넘겼습니다. 유저 승리!\n");
+			System.err.println("\n딜러가 21을 넘겼습니다. 유저 승!\n");
 			System.out.println("남은 코인\n유저 : " + playerCoin + "\n딜러 : " + dealerCoin);
-		} else if (playerScore == dealerScore) {
-			System.err.println("\n무승부입니다.\n");
-			System.out.println("남은 코인\n유저 : " + playerCoin + "\n딜러 : " + dealerCoin);
+
 		} else if (playerScore > dealerScore) {
 			playerCoin += 1;
 			dealerCoin += -1;
-			System.err.println("\n유저 승리!\n");
+			System.err.println("\n유저 승!\n");
 			System.out.println("남은 코인\n유저 : " + playerCoin + "\n딜러 : " + dealerCoin);
+
 		} else if (playerScore < dealerScore) {
 			playerCoin += -1;
 			dealerCoin += 1;
-			System.err.println("\n딜러 승리!\n");
+			System.err.println("\n딜러 승!\n");
+			System.out.println("남은 코인\n유저 : " + playerCoin + "\n딜러 : " + dealerCoin);
+
+		} else if (playerScore == dealerScore) {
+			System.err.println("\n무승부\n");
 			System.out.println("남은 코인\n유저 : " + playerCoin + "\n딜러 : " + dealerCoin);
 		}
-
 	}
 
 	public static void main(String[] args) {
