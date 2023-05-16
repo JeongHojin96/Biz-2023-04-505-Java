@@ -89,7 +89,7 @@ public class BlackjackGame2 {
 					System.out.println();
 					if (input.equalsIgnoreCase("Y")) {
 						playerCoin = 0;
-
+						break;
 					} else if (input.equalsIgnoreCase("N")) {
 
 						System.out.print("게임을 재시작 합니다");
@@ -97,35 +97,35 @@ public class BlackjackGame2 {
 				}
 			}
 
-			System.out.print("이어하기[Y] 종료하기[Q]");
-			input = scanner.nextLine();
-			System.out.println();
-			if (input.equalsIgnoreCase("Y")) {
-			} else if (input.equalsIgnoreCase("Q")) {
-				System.err.print("종료시 모든 코인을 잃습니다. 종료(Y) 재시작(N)");
-				input = scanner.nextLine();
-				System.out.println();
-				if (input.equalsIgnoreCase("Y")) {
-					playerCoin = 0;
-				} else if (input.equalsIgnoreCase("N")) {
-					System.out.println("게임을 재시작 합니다");
-				}
-			}
-
 			if (playerCoin == 0) {
 				System.out.println();
 				System.err.print("Game Over");
 				tokenOver = true;
-
 			} else if (dealerCoin == 0) {
 				System.out.println();
 				System.out.print("승리를 축하합니다.");
 				tokenOver = true;
+			} else {
+				System.out.print("이어하기[Y] 종료하기[Q]");
+				input = scanner.nextLine();
+				System.out.println();
+				if (input.equalsIgnoreCase("Y")) {
+					deck.clear();
+					playerHand.clear();
+					dealerHand.clear();
+					clear();
+				} else if (input.equalsIgnoreCase("Q")) {
+					System.err.print("종료시 모든 코인을 잃습니다. 종료(Y) 재시작(N)");
+					input = scanner.nextLine();
+					System.out.println();
+					if (input.equalsIgnoreCase("Y")) {
+						playerCoin = 0;
+						break;
+					} else if (input.equalsIgnoreCase("N")) {
+						System.out.println("게임을 재시작 합니다");
+					}
+				}
 			}
-			deck.clear();
-			playerHand.clear();
-			dealerHand.clear();
-			clear();
 		}
 	}
 
