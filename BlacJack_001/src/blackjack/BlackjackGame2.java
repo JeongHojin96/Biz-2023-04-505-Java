@@ -120,7 +120,7 @@ public class BlackjackGame2 {
 
 		for (String suit : suits) {
 			for (String rank : ranks) {
-				deck.add(rank + suit);
+				deck.add(suit+rank);
 			}
 		}
 	}
@@ -158,7 +158,7 @@ public class BlackjackGame2 {
 		int aceCount = 0;
 
 		for (String card : hand) {
-			String rank = card.substring(0, card.length() - 1);
+			String rank = card.substring(1);
 			if (rank.equals("A")) {
 				score += 11; // Ace는 일단 11로 계산합니다.
 				aceCount++;
@@ -186,35 +186,30 @@ public class BlackjackGame2 {
 			playerCoin += -1;
 			dealerCoin += 1;
 			System.err.println("유저가 21을 넘겼습니다. 딜러 승!");
-			System.out.println();
 			System.out.println("남은 코인");
-			System.out.println("유저 : " + playerCoin + "\n딜러 : " + dealerCoin);
+			System.out.println("유저 : " + playerCoin + "\n" + "딜러 : " + dealerCoin);
 		} else if (dealerScore > 21) {
 			playerCoin += 1;
 			dealerCoin += -1;
 			System.err.println("딜러가 21을 넘겼습니다. 유저 승!");
-			System.out.println();
 			System.out.println("남은 코인");
-			System.out.println("유저 : " + playerCoin + "\n딜러 : " + dealerCoin);
+			System.out.println("유저 : " + playerCoin + "\n" + "딜러 : " + dealerCoin);
 		} else if (playerScore > dealerScore) {
 			playerCoin += 1;
 			dealerCoin += -1;
 			System.err.println("유저 승!");
-			System.out.println();
 			System.out.println("남은 코인");
-			System.out.println("유저 : " + playerCoin + "\n딜러 : " + dealerCoin);
+			System.out.println("유저 : " + playerCoin + "\n" + "딜러 : " + dealerCoin);
 		} else if (playerScore < dealerScore) {
 			playerCoin += -1;
 			dealerCoin += 1;
 			System.err.println("딜러 승!");
-			System.out.println();
 			System.out.println("남은 코인");
-			System.out.println("유저 : " + playerCoin + "\n딜러 : " + dealerCoin);
+			System.out.println("유저 : " + playerCoin + "\n" + "딜러 : " + dealerCoin);
 		} else if (playerScore == dealerScore) {
 			System.err.println("무승부");
-			System.out.println();
 			System.out.println("남은 코인");
-			System.out.println("유저 : " + playerCoin + "\n딜러 : " + dealerCoin);
+			System.out.println("유저 : " + playerCoin + "\n" + "딜러 : " + dealerCoin);
 		}
 	}
 
