@@ -35,8 +35,10 @@ public class BlackjackGame2 {
 			String input = scanner.nextLine();
 			if (input.equalsIgnoreCase("S")) {
 				tokenOver = false;
+				clear();
 				break;
 			} else if (input.equalsIgnoreCase("T")) {
+				clear();
 				rule();
 				System.out.println("게임 시작(S) 게임 규칙(T) 게임 종료(Q)");
 			} else if (input.equalsIgnoreCase("Q")) {
@@ -49,7 +51,7 @@ public class BlackjackGame2 {
 			initializeDeck();
 			shuffleDeck();
 			initialDeal();
-
+			String input = "";
 			boolean gameOver = false;
 
 			System.out.println("-".repeat(30));
@@ -63,9 +65,9 @@ public class BlackjackGame2 {
 					break;
 				}
 				System.out.println();
-				System.out.println("카드 받기(Y) 결과 확인(N) 게임 종료(Q)");
+				System.out.print("카드 받기(Y) 결과 확인(N) 게임 종료(Q)");
+				input = scanner.nextLine();
 				System.out.println();
-				String input = scanner.nextLine();
 
 				if (input.equalsIgnoreCase("Y")) {
 					hit(playerHand);
@@ -84,18 +86,32 @@ public class BlackjackGame2 {
 				} else if (input.equalsIgnoreCase("Q")) {
 					System.err.print("종료시 모든 코인을 잃습니다. 종료(Y) 재시작(N)");
 					input = scanner.nextLine();
+					System.out.println();
 					if (input.equalsIgnoreCase("Y")) {
 						playerCoin = 0;
-						gameOver = true;
-						tokenOver = true;
 
 					} else if (input.equalsIgnoreCase("N")) {
 
-						gameOver = true;
 						System.out.print("게임을 재시작 합니다");
 					}
 				}
 			}
+
+			System.out.print("이어하기[Y] 종료하기[Q]");
+			input = scanner.nextLine();
+			System.out.println();
+			if (input.equalsIgnoreCase("Y")) {
+			} else if (input.equalsIgnoreCase("Q")) {
+				System.err.print("종료시 모든 코인을 잃습니다. 종료(Y) 재시작(N)");
+				input = scanner.nextLine();
+				System.out.println();
+				if (input.equalsIgnoreCase("Y")) {
+					playerCoin = 0;
+				} else if (input.equalsIgnoreCase("N")) {
+					System.out.println("게임을 재시작 합니다");
+				}
+			}
+
 			if (playerCoin == 0) {
 				System.out.println();
 				System.err.print("Game Over");
@@ -107,10 +123,9 @@ public class BlackjackGame2 {
 				tokenOver = true;
 			}
 			deck.clear();
-			playerScore = 0;
-			dealerScore = 0;
 			playerHand.clear();
 			dealerHand.clear();
+			clear();
 		}
 	}
 
@@ -120,7 +135,7 @@ public class BlackjackGame2 {
 
 		for (String suit : suits) {
 			for (String rank : ranks) {
-				deck.add(suit+rank);
+				deck.add(suit + rank);
 			}
 		}
 	}
@@ -186,28 +201,33 @@ public class BlackjackGame2 {
 			playerCoin += -1;
 			dealerCoin += 1;
 			System.err.println("유저가 21을 넘겼습니다. 딜러 승!");
+			System.out.println();
 			System.out.println("남은 코인");
 			System.out.println("유저 : " + playerCoin + "\n" + "딜러 : " + dealerCoin);
 		} else if (dealerScore > 21) {
 			playerCoin += 1;
 			dealerCoin += -1;
 			System.err.println("딜러가 21을 넘겼습니다. 유저 승!");
+			System.out.println();
 			System.out.println("남은 코인");
 			System.out.println("유저 : " + playerCoin + "\n" + "딜러 : " + dealerCoin);
 		} else if (playerScore > dealerScore) {
 			playerCoin += 1;
 			dealerCoin += -1;
 			System.err.println("유저 승!");
+			System.out.println();
 			System.out.println("남은 코인");
 			System.out.println("유저 : " + playerCoin + "\n" + "딜러 : " + dealerCoin);
 		} else if (playerScore < dealerScore) {
 			playerCoin += -1;
 			dealerCoin += 1;
 			System.err.println("딜러 승!");
+			System.out.println();
 			System.out.println("남은 코인");
 			System.out.println("유저 : " + playerCoin + "\n" + "딜러 : " + dealerCoin);
 		} else if (playerScore == dealerScore) {
 			System.err.println("무승부");
+			System.out.println();
 			System.out.println("남은 코인");
 			System.out.println("유저 : " + playerCoin + "\n" + "딜러 : " + dealerCoin);
 		}
@@ -226,6 +246,10 @@ public class BlackjackGame2 {
 		System.out.println("   보유 카드의 합이 21점을 넘으면 ACE카드는 1점으로 계산합니다.");
 		System.out.println("4. J, Q, K 카드의 점수는 10점으로 계산합니다.");
 		System.out.println();
+	}
+
+	public void clear() {
+		System.out.print("\n".repeat(10));
 	}
 
 	public static void main(String[] args) {

@@ -1,13 +1,16 @@
 package com.callor.student.utils;
 
 public class Line {
-
-	public static final String dLINE = "=".repeat(60);
-	public static final String sLINE = "-".repeat(60);
-	public static final String dLINE(int length) {
+	
+	public static final String dLine = "=".repeat(60);
+	public static final String sLine = "-".repeat(60);
+	
+	public static final String dLine(int length) {
 		return "=".repeat(length);
 	}
-	public static final String sLINE(int length) {
+	public static final String sLine(int length) {
 		return "-".repeat(length);
 	}
+	
+
 }

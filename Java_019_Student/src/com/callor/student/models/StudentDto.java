@@ -1,14 +1,13 @@
 package com.callor.student.models;
 
 public class StudentDto {
-
+	
 	public String stNum;
 	public String stName;
 	public String stDept;
 	public int stGrade;
 	public String stTel;
-	
-	
+
 	public StudentDto() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -29,41 +28,18 @@ public class StudentDto {
 		this.stGrade = stGrade;
 		this.stTel = stTel;
 	}
-	public String getStNum() {
-		return stNum;
-	}
-	public void setStNum(String stNum) {
-		this.stNum = stNum;
-	}
-	public String getStName() {
-		return stName;
-	}
-	public void setStName(String stName) {
-		this.stName = stName;
-	}
-	public String getStDept() {
-		return stDept;
-	}
-	public void setStDept(String stDept) {
-		this.stDept = stDept;
-	}
-	public int getStGrade() {
-		return stGrade;
-	}
-	public void setStGrade(int stGrade) {
-		this.stGrade = stGrade;
-	}
-	public String getStTel() {
-		return stTel;
-	}
-	public void setStTel(String stTel) {
-		this.stTel = stTel;
-	}
+
+
+
 	@Override
 	public String toString() {
-		return "StudentDto [stNum=" + stNum + ", stName=" + stName + ", stDept=" + stDept + ", stGrade=" + stGrade
-				+ ", stTel=" + stTel + "]";
+		return "학번 : " + stNum + ", 이름 : " + stName + ", 학과 : " + stDept + ", 학년 : " + stGrade
+				+ ", 전화번호 : " + stTel + "\n";
 	}
 	
 	
+	
+	
+	
+
 }
