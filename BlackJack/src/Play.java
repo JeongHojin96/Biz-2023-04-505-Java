@@ -5,3 +5,4 @@ public class Play {
 		BlackJack.getInstance().playGame();
 	}
 }
+
