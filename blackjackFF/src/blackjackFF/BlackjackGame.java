@@ -100,12 +100,14 @@ public class BlackjackGame {
 
 			if (playerCoin == 0) {
 				System.out.println();
-				System.err.print("Game Over");
+				System.err.println("Game Over");
 				tokenOver = true;
+				break;
 			} else if (dealerCoin == 0) {
 				System.out.println();
-				System.out.print("승리를 축하합니다.");
+				System.out.println("승리를 축하합니다.");
 				tokenOver = true;
+				break;
 			}
 			while (true) {
 				System.out.print("이어하기[Y] 종료하기[Q]");
