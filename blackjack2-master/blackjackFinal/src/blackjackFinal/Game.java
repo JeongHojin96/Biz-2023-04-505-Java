@@ -51,6 +51,7 @@ public class Game {
 			deck.initializeDeck();
 			deck.shuffleDeck();
 			deck.initialDeal();
+			
 			String input = "";
 			boolean gameOver = false;
 
