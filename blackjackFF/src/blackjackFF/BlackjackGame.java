@@ -26,34 +26,52 @@ public class BlackjackGame {
 		playerCoin = 5;
 		dealerCoin = 5;
 	}
+
 	public void printPlayerHand() {
-		System.out.print("            "+"┌───┐ ".repeat(playerHand.size())+"\n");
+		System.out.print("            " + "┌───┐ ".repeat(playerHand.size()) + "\n");
 		System.out.print("유저 손패 : ");
 		for (int i = 0; i < playerHand.size(); i++) {
-			System.out.print("│ "+ playerHand.get(i)+"│ ");
+			if (playerHand.get(i).equals("♠10") || playerHand.get(i).equals("♥10") || playerHand.get(i).equals("♦10")
+					|| playerHand.get(i).equals("♣10")) {
+				System.out.print("│" + playerHand.get(i) + "│ ");
+			} else {
+				System.out.print("│ " + playerHand.get(i) + "│ ");
+			}
 		}
 		System.out.print("점수: " + playerScore);
 		System.out.println();
-		System.out.print("            "+"└───┘ ".repeat(playerHand.size())+"\n");
+		System.out.print("            " + "└───┘ ".repeat(playerHand.size()) + "\n");
 	}
-	
+
 	public void printDealerAllHand() {
-		System.out.print("            "+"┌───┐ ".repeat(dealerHand.size())+"\n");
+		System.out.print("            " + "┌───┐ ".repeat(dealerHand.size()) + "\n");
 		System.out.print("딜러 손패 : ");
 		for (int i = 0; i < dealerHand.size(); i++) {
-			System.out.print("│ "+ dealerHand.get(i)+"│ ");
+			if (dealerHand.get(i).equals("♠10") || dealerHand.get(i).equals("♥10") || dealerHand.get(i).equals("♦10")
+					|| dealerHand.get(i).equals("♣10")) {
+				System.out.print("│" + dealerHand.get(i) + "│ ");
+			} else {
+				System.out.print("│ " + dealerHand.get(i) + "│ ");
+			}
 		}
 		System.out.print("점수: " + dealerScore);
 		System.out.println();
-		System.out.print("            "+"└───┘ ".repeat(dealerHand.size())+"\n");
+		System.out.print("            " + "└───┘ ".repeat(dealerHand.size()) + "\n");
 	}
-	
+
 	public void printDealerHand() {
-		System.out.print("            "+"┌───┐ ".repeat(dealerHand.size())+"\n");
-		System.out.print("딜러 손패 : " + "│ "+ dealerHand.get(0)+"│ ");
-		System.out.print("│ ? │ ".repeat(dealerHand.size()-1));
+		System.out.print("            " + "┌───┐ ".repeat(dealerHand.size()) + "\n");
+		System.out.print("딜러 손패 : ");
+		if (dealerHand.get(0).equals("♠10") || dealerHand.get(0).equals("♥10") || dealerHand.get(0).equals("♦10")
+				|| dealerHand.get(0).equals("♣10")) {
+			System.out.print("│" + dealerHand.get(0) + "│ ");
+		} else {
+			System.out.print("│ " + dealerHand.get(0) + "│ ");
+		}
+
+		System.out.print("│ ? │ ".repeat(dealerHand.size() - 1));
 		System.out.println();
-		System.out.print("            "+"└───┘ ".repeat(dealerHand.size())+"\n");
+		System.out.print("            " + "└───┘ ".repeat(dealerHand.size()) + "\n");
 	}
 
 	public void startGame() {
@@ -101,8 +119,11 @@ public class BlackjackGame {
 				if (input.equalsIgnoreCase("Y")) {
 					rule.clear();
 					hit(playerHand);
+					if (dealerScore < 17) {
+						hit(dealerHand);
+					}
 					calculateScore();
-					if (playerScore > 21) {
+					if (playerScore > 21 || dealerScore > 21) {
 						gameOver = true;
 						showResult();
 					}
@@ -207,11 +228,16 @@ public class BlackjackGame {
 	}
 
 	private void showResult() {
-		System.out.println("딜러 손패 : " + dealerHand + ", 점수: " + dealerScore);
-		System.out.println("유저 손패 : " + playerHand + ", 점수: " + playerScore);
+		printDealerAllHand();
+		printPlayerHand();
 		System.out.println();
 
-		if (playerScore > 21) {
+		if (playerScore > 21 && dealerScore > 21) {
+			System.err.println("무승부");
+			System.out.println();
+			System.out.println("남은 코인");
+			System.out.println("유저 : " + playerCoin + "\n" + "딜러 : " + dealerCoin);
+		} else if (playerScore > 21) {
 			playerCoin += -1;
 			dealerCoin += 1;
 			System.out.println("유저가 21을 넘겼습니다. 딜러 승!");
