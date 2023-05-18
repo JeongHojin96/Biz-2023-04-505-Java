@@ -7,8 +7,7 @@ import java.util.Scanner;
 // 클래스나눈거임 
 public class BlackjackGame {
 	Rule rule = new Rule();
-	public Deck makedeck;
-	private List<String> deck;
+	public Deck makeDeck;
 	private List<String> playerHand;
 	private List<String> dealerHand;
 	private int playerScore;
@@ -18,8 +17,7 @@ public class BlackjackGame {
 	private int dealerCoin;
 
 	public BlackjackGame() {
-		makedeck = new Deck();
-		deck = new ArrayList<>();
+		makeDeck = new Deck();
 		playerHand = new ArrayList<String>();
 		dealerHand = new ArrayList<String>();
 		playerScore = 0;
@@ -51,17 +49,17 @@ public class BlackjackGame {
 		}
 
 		while (!tokenOver) {
-			makedeck.initializeDeck();
-			makedeck.shuffleDeck();
+			makeDeck.makeDeck();
 			initialDeal();
 			String input = "";
 			boolean gameOver = false;
 
 			System.out.println("-".repeat(30));
 			while (!gameOver) {
+				System.out.println("남은 카드갯수 : " + makeDeck.deck.size());
+				System.out.println();
 				System.out.println("딜러 손패(1st) : " + dealerHand.get(0) + ", ?");
 				System.out.println("유저 손패(1st) : " + playerHand + ", 점수: " + playerScore);
-
 				if (playerScore == 21 || dealerScore == 21) {
 					gameOver = true;
 					showResult();
@@ -114,7 +112,7 @@ public class BlackjackGame {
 				input = scanner.nextLine();
 				System.out.println();
 				if (input.equalsIgnoreCase("Y")) {
-					deck.clear(); // java clear
+					makeDeck.deck.clear(); // java clear
 					playerHand.clear(); // java clear
 					dealerHand.clear(); // java clear
 					rule.clear();
@@ -144,7 +142,7 @@ public class BlackjackGame {
 	}
 
 	public void hit(List<String> hand) {
-		String card = makedeck.deck.remove(makedeck.deck.size() - 1);
+		String card = makeDeck.deck.remove(makeDeck.deck.size() - 1);
 		hand.add(card);
 	}
 
@@ -178,8 +176,8 @@ public class BlackjackGame {
 	}
 
 	private void showResult() {
-		System.out.println("딜러 손패: " + dealerHand + ", 점수: " + dealerScore);
-		System.out.println("유저 손패: " + playerHand + ", 점수: " + playerScore);
+		System.out.println("딜러 손패 : " + dealerHand + ", 점수: " + dealerScore);
+		System.out.println("유저 손패 : " + playerHand + ", 점수: " + playerScore);
 		System.out.println();
 
 		if (playerScore > 21) {
