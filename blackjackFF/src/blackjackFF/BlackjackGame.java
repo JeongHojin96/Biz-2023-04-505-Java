@@ -26,6 +26,35 @@ public class BlackjackGame {
 		playerCoin = 5;
 		dealerCoin = 5;
 	}
+	public void printPlayerHand() {
+		System.out.print("            "+"┌───┐ ".repeat(playerHand.size())+"\n");
+		System.out.print("유저 손패 : ");
+		for (int i = 0; i < playerHand.size(); i++) {
+			System.out.print("│ "+ playerHand.get(i)+"│ ");
+		}
+		System.out.print("점수: " + playerScore);
+		System.out.println();
+		System.out.print("            "+"└───┘ ".repeat(playerHand.size())+"\n");
+	}
+	
+	public void printDealerAllHand() {
+		System.out.print("            "+"┌───┐ ".repeat(dealerHand.size())+"\n");
+		System.out.print("딜러 손패 : ");
+		for (int i = 0; i < dealerHand.size(); i++) {
+			System.out.print("│ "+ dealerHand.get(i)+"│ ");
+		}
+		System.out.print("점수: " + dealerScore);
+		System.out.println();
+		System.out.print("            "+"└───┘ ".repeat(dealerHand.size())+"\n");
+	}
+	
+	public void printDealerHand() {
+		System.out.print("            "+"┌───┐ ".repeat(dealerHand.size())+"\n");
+		System.out.print("딜러 손패 : " + "│ "+ dealerHand.get(0)+"│ ");
+		System.out.print("│ ? │ ".repeat(dealerHand.size()-1));
+		System.out.println();
+		System.out.print("            "+"└───┘ ".repeat(dealerHand.size())+"\n");
+	}
 
 	public void startGame() {
 		boolean tokenOver;
@@ -41,7 +70,6 @@ public class BlackjackGame {
 			} else if (input.equalsIgnoreCase("T")) {
 				rule.clear();
 				rule.rule();
-				System.out.println("게임 시작(S) 게임 규칙(T) 게임 종료(Q)");
 			} else if (input.equalsIgnoreCase("Q")) {
 				tokenOver = true;
 				break;
@@ -58,8 +86,8 @@ public class BlackjackGame {
 			while (!gameOver) {
 				System.out.println("남은 카드갯수 : " + makeDeck.deck.size());
 				System.out.println();
-				System.out.println("딜러 손패(1st) : " + dealerHand.get(0) + ", ?");
-				System.out.println("유저 손패(1st) : " + playerHand + ", 점수: " + playerScore);
+				printDealerHand();
+				printPlayerHand();
 				if (playerScore == 21 || dealerScore == 21) {
 					gameOver = true;
 					showResult();
@@ -71,6 +99,7 @@ public class BlackjackGame {
 				System.out.println();
 
 				if (input.equalsIgnoreCase("Y")) {
+					rule.clear();
 					hit(playerHand);
 					calculateScore();
 					if (playerScore > 21) {
