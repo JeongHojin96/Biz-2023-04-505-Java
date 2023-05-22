@@ -1,5 +1,6 @@
 package com.callor.bank.utils;
 
+
 public class AnsiConsol {
 	
     private static final String black    = "\u001B[30m" ;
@@ -12,7 +13,6 @@ public class AnsiConsol {
     private static final String white     = "\u001B[37m" ;
 
     public static final String exit     = "\u001B[0m" ;
-    
 
     public static final String message(String color,String message){
         if     ("BLACK".equalsIgnoreCase(color))    color = black;
@@ -50,12 +50,5 @@ public class AnsiConsol {
     public static final String WHITE(String text) {
     	return String.format("%s%s%s",white,text,exit);
     }
-
-
-
-    
-    
-    
-	
 
 }

@@ -34,7 +34,6 @@ public class Hand {
             score -= 10;
             aceCount--;
         }
-
         return score;
     }
 
