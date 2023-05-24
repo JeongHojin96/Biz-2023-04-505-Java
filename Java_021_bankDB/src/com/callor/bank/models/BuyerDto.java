@@ -25,8 +25,8 @@ public class BuyerDto {
 
 	@Override
 	public String toString() {
-		return "BuyerDto [buId=" + buId + ", buName=" + buName + ", buTel=" + buTel + ", buAddr=" + buAddr
-				+ ", buBirth=" + buBirth + ", buJob=" + buJob + "]";
+		return "ID : " + buId + " 이름 : " + buName + " 전화번호 : " + buTel + " 주소 : " + buAddr
+				+ " 생년월일 : " + buBirth + " 직업 : " + buJob;
 	}
 
 }

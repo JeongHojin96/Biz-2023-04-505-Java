@@ -1,18 +1,26 @@
 package com.callor.bank.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import com.callor.bank.config.DBContract;
+import com.callor.bank.models.AccDto;
 import com.callor.bank.models.BuyerDto;
+import com.callor.bank.service.impl.AccServiceImplV1;
 import com.callor.bank.service.impl.BuyerServiceImplV1;
+import com.callor.bank.service.utils.Line;
 
 public class BankService {
 
 	protected final Scanner scan;
 	protected List<BuyerDto> buyerList;
 	protected final BuyerService buyerService;
+	protected final AccService accService;
 
 	public BankService() {
+		accService = new AccServiceImplV1();
 		buyerService = new BuyerServiceImplV1();
 		scan = new Scanner(System.in);
 	}
@@ -127,4 +135,142 @@ public class BankService {
 
 		}
 	}
+
+	public void findUserInfo() {
+		this.printBuyerList();
+
+		System.out.println("조회할 고객ID를 입력하세요");
+		System.out.print("고객ID >> ");
+		String strBuId = scan.nextLine();
+
+		BuyerDto buyerDto = buyerService.findById(strBuId);
+
+		if (buyerDto == null) {
+			System.out.println("고객ID 가 없습니다");
+			return;
+		} else {
+			System.out.println(Line.sLine(100));
+			System.out.printf("고객ID :  %s\n", buyerDto.buId);
+			System.out.printf("이름 :  %s\n", buyerDto.buName);
+			System.out.printf("전화번호 :  %s\n", buyerDto.buTel);
+			System.out.printf("주소 :  %s\n", buyerDto.buAddr);
+			System.out.println(Line.sLine(100));
+		}
+
+		List<AccDto> accList = accService.findByBuId(strBuId);
+		if (accList.isEmpty()) {
+			System.out.println("고객의 계좌정보가 없습니다");
+			return;
+		} else {
+			System.out.println(Line.sLine(100));
+			System.out.println("계좌번호\t구분\t잔액");
+			System.out.println(Line.sLine(100));
+			for (AccDto accDto : accList) {
+				System.out.printf("%s\t", accDto.acNum);
+
+				int intDiv = 0;
+				try {
+					intDiv = Integer.valueOf(accDto.acDiv);
+
+					System.out.printf("%s\t", DBContract.ACC_DIV[intDiv - 1]);
+
+				} catch (Exception e) {
+					System.out.printf("%s\t", "종류불명");
+				}
+				System.out.printf("%d\n", accDto.acBalance);
+			}
+			System.out.println(Line.sLine(100));
+		}
+
+	}
+
+	public void makeAcout() {
+		while (true) {
+			System.out.println("ID 를 입력하세요");
+			String strBuId = scan.nextLine();
+
+			BuyerDto buyerDto = buyerService.findById(strBuId);
+			if (buyerDto == null) {
+				System.out.printf("고객 정보가 없습니다(%s)", strBuId);
+				continue;
+			}
+			Date date = new Date(System.currentTimeMillis());
+			SimpleDateFormat today = new SimpleDateFormat("YYYYMMdd");
+
+			String todayString = today.format(date);
+
+			int maxNum = Integer.valueOf(accService.maxAcNum(todayString)) + 1;
+			String acNum = String.format("%s%02d", todayString, maxNum);
+			System.out.println("계좌번호 : " + acNum);
+
+			AccDto accDto = new AccDto();
+
+			while (true) {
+				System.out.print("1.입출금계좌, 2.적금계좌, 3.대출계좌");
+				String selNum = scan.nextLine();
+
+				if (selNum.equals("1")) {
+					accDto.acDiv = Integer.toString(1);
+					break;
+				} else if (selNum.equals("2")) {
+					accDto.acDiv = Integer.toString(2);
+					break;
+				} else if (selNum.equals("3")) {
+					accDto.acDiv = Integer.toString(3);
+					break;
+				} else
+					System.out.println("잘못 입력하셨습니다.");
+				continue;
+			}
+			accDto.acNum = acNum;
+			accDto.acBalance = 10000;
+			accDto.acBuId = strBuId;
+			accService.insert(accDto);
+			break;
+		}
+
+	}
+
+//		int numBank;
+//		int maxBank = 0;
+//		String fTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+//		AccDto accDto = new AccDto();
+//		System.out.print("고객 ID 입력 >> ");
+//		String strId = scan.nextLine();
+//		BuyerDto buyerDto = buyerService.findById(strId);
+//		List<AccDto> accList = accService.selectAll();
+//		if (buyerDto == null) {
+//			System.out.println("조회한 고객 ID는 없는 데이터 입니다.");
+//		} else if (buyerDto.buId == strId) {
+//			for (AccDto dto : accList) {
+//				numBank = Integer.valueOf(dto.acNum.substring(8, 2));
+//				if (maxBank < numBank) {
+//					maxBank = numBank;
+//				}
+//			}
+//			String newNum = fTime + String.format(%s%02d,maxBank + 1);
+//			System.out.println("생성할 계좌번호 : " + newNum);
+//			
+//			while (true) {
+//				System.out.print("1.입출금계좌, 2.적금계좌, 3.대출계좌");
+//				String selNum = scan.nextLine();
+//				if (selNum.equals("1")) {
+//					accDto.acDiv = Integer.toString(1);
+//					break;
+//				} else if (selNum.equals("2")) {
+//					accDto.acDiv = Integer.toString(2);
+//					break;
+//				} else if (selNum.equals("3")) {
+//					accDto.acDiv = Integer.toString(3);
+//					break;
+//				} else
+//					System.out.println("잘못 입력하셨습니다.");
+//			}
+//			accDto.acBalance = 10000;
+//			accDto.acBuId = strId;
+//			accService.insert(accDto);
+//		}
+//	}
+//	
+
 }

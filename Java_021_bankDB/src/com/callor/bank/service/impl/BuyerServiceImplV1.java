@@ -85,7 +85,7 @@ public class BuyerServiceImplV1 implements BuyerService {
 
 	public int insert(BuyerDto dto) {
 
-		String sql = " INSERT INTO tbl_buyer(buid, buname, butel) " + " VALUES(?,?,?) ";
+		String sql = " INSERT INTO tbl_buyer(buid, buname, butel, buname) " + " VALUES(?,?,?) ";
 
 		try {
 			PreparedStatement pStr = dbConn.prepareStatement(sql);
