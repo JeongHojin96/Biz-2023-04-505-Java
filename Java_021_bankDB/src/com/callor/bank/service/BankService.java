@@ -7,7 +7,9 @@ import java.util.Scanner;
 
 import com.callor.bank.config.DBContract;
 import com.callor.bank.models.AccDto;
+import com.callor.bank.models.AccListDto;
 import com.callor.bank.models.BuyerDto;
+import com.callor.bank.service.impl.AccListServiceImplV1;
 import com.callor.bank.service.impl.AccServiceImplV1;
 import com.callor.bank.service.impl.BuyerServiceImplV1;
 import com.callor.bank.service.utils.Line;
@@ -18,11 +20,13 @@ public class BankService {
 	protected List<BuyerDto> buyerList;
 	protected final BuyerService buyerService;
 	protected final AccService accService;
+	protected final AccListServiceImplV1 accListService;
 
 	public BankService() {
 		accService = new AccServiceImplV1();
 		buyerService = new BuyerServiceImplV1();
 		scan = new Scanner(System.in);
+		accListService = new AccListServiceImplV1();
 	}
 
 	public void printBuyerList() {
@@ -136,6 +140,41 @@ public class BankService {
 		}
 	}
 
+	public void insertAccList() {
+		this.findUserInfo();
+		AccListDto accListDto = new AccListDto();
+		
+		System.out.print("계좌번호 입력 >> ");
+		String strAcNum = scan.nextLine();
+		accListDto.acNum = strAcNum;
+
+		while (true) {
+			System.out.print("1. 입금, 2. 출금 >> ");
+			String strAioDiv = scan.nextLine();
+			accListDto.aioDiv = strAioDiv;
+			if (strAioDiv.equals("1")) {
+				System.out.print("입금액 입력 >> ");
+				String strAioInput = scan.nextLine();
+				accListDto.aioInput = Integer.valueOf(strAioInput);
+				accListDto.aioOutput = 0;
+				break;
+			} else if (strAioDiv.equals("2")) {
+				System.out.print("출금액 입력 >> ");
+				String strAioOutput = scan.nextLine();
+				accListDto.aioOutput = -Integer.valueOf(strAioOutput);
+				accListDto.aioInput = 0;
+				break;
+			} else continue;
+		}
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat today = new SimpleDateFormat("YYYY-MM-dd");
+		accListDto.aioDate = today.format(date);
+		SimpleDateFormat nowTime = new SimpleDateFormat("HH:mm:ss");
+		accListDto.aioTIme = nowTime.format(date);
+		accListService.insert(accListDto);
+		
+	}
+
 	public void findUserInfo() {
 		this.printBuyerList();
 
@@ -181,6 +220,7 @@ public class BankService {
 			}
 			System.out.println(Line.sLine(100));
 		}
+
 
 	}
 

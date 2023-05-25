@@ -22,6 +22,7 @@ public class ExecE {
 			System.out.println("	4. 고객 리스트");
 			System.out.println("	5. 고객정보(계좌) 조회");
 			System.out.println("	6. 계좌번호 생성");
+			System.out.println("	7. 입출금 업무");
 			System.out.println("	9. 업무종료");
 			System.out.println("-".repeat(100));
 			System.out.print("업무선택 >> ");
@@ -48,6 +49,8 @@ public class ExecE {
 				bankService.findUserInfo();
 			else if (intSelect == 6)
 				bankService.makeAcout();
+			else if (intSelect == 7) 
+				bankService.insertAccList();
 		}
 		System.out.println("업무종료");
 

@@ -148,7 +148,9 @@ public class AccServiceImplV1 implements AccService {
 
 			ResultSet result = pStr.executeQuery();
 			if (result.next()) {
-				return result.getString(1);
+				String maxNum = result.getString(1);
+				if(maxNum == null) return "0";
+				else return maxNum;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
