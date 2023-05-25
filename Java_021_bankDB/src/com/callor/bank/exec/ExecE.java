@@ -12,7 +12,7 @@ public class ExecE {
 		Scanner scan = new Scanner(System.in);
 
 		BankService bankService = new BankService();
-
+		
 		while (true) {
 			BankInfo.headerPrint();
 			System.out.println("수행할 업무를 선택하세요");

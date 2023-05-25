@@ -108,6 +108,61 @@ public class BankService {
 		}
 	}
 
+	public void insertAccList() {
+
+		if (this.findUserInfo() == 0) {
+			System.out.println("다시 입력해주세요.");
+		} else {
+			AccListDto accListDto = new AccListDto();
+
+			System.out.print("계좌번호 입력 >> ");
+			String strAcNum = scan.nextLine();
+			AccDto accdto = accService.findById(strAcNum);
+			if (accdto == null) {
+				System.out.println("계좌정보가 없습니다.");
+				return;
+			} else {
+				while (true) {
+					accListDto.acNum = strAcNum;
+					System.out.print("1. 입금, 2. 출금 >> ");
+					String strAioDiv = scan.nextLine();
+					accListDto.aioDiv = strAioDiv;
+					if (strAioDiv.equals("1")) {
+						System.out.print("입금액 입력 >> ");
+						String strAioInput = scan.nextLine();
+						accListDto.aioInput = Integer.valueOf(strAioInput);
+						accListDto.aioOutput = 0;
+						break;
+					} else if (strAioDiv.equals("2")) {
+						System.out.print("출금액 입력 >> ");
+						String strAioOutput = scan.nextLine();
+						accListDto.aioOutput = -Integer.valueOf(strAioOutput);
+						accListDto.aioInput = 0;
+						break;
+					} else
+						continue;
+				}
+				Date date = new Date(System.currentTimeMillis());
+				SimpleDateFormat today = new SimpleDateFormat("YYYY-MM-dd");
+				accListDto.aioDate = today.format(date);
+				SimpleDateFormat nowTime = new SimpleDateFormat("HH:mm:ss");
+				accListDto.aioTIme = nowTime.format(date);
+
+				int result = accListService.insert(accListDto);
+
+				if (result > 0 || !(accdto.acBalance < -accListDto.aioInput)) {
+					int sumav = Integer.valueOf(accdto.acBalance) + Integer.valueOf(accListDto.aioInput)
+							+ Integer.valueOf(accListDto.aioOutput);
+					accdto.acBalance = sumav;
+					accService.update(accdto);
+					System.out.println("완료");
+				} else if (result == 0 || accdto.acBalance < -accListDto.aioOutput) {
+					System.out.println("실패");
+				}
+			}
+		}
+	}
+
 	public void update() {
 		while (true) {
 			System.out.println("수정할 고객 ID 를 입력하세요");
@@ -140,42 +195,7 @@ public class BankService {
 		}
 	}
 
-	public void insertAccList() {
-		this.findUserInfo();
-		AccListDto accListDto = new AccListDto();
-		
-		System.out.print("계좌번호 입력 >> ");
-		String strAcNum = scan.nextLine();
-		accListDto.acNum = strAcNum;
-
-		while (true) {
-			System.out.print("1. 입금, 2. 출금 >> ");
-			String strAioDiv = scan.nextLine();
-			accListDto.aioDiv = strAioDiv;
-			if (strAioDiv.equals("1")) {
-				System.out.print("입금액 입력 >> ");
-				String strAioInput = scan.nextLine();
-				accListDto.aioInput = Integer.valueOf(strAioInput);
-				accListDto.aioOutput = 0;
-				break;
-			} else if (strAioDiv.equals("2")) {
-				System.out.print("출금액 입력 >> ");
-				String strAioOutput = scan.nextLine();
-				accListDto.aioOutput = -Integer.valueOf(strAioOutput);
-				accListDto.aioInput = 0;
-				break;
-			} else continue;
-		}
-		Date date = new Date(System.currentTimeMillis());
-		SimpleDateFormat today = new SimpleDateFormat("YYYY-MM-dd");
-		accListDto.aioDate = today.format(date);
-		SimpleDateFormat nowTime = new SimpleDateFormat("HH:mm:ss");
-		accListDto.aioTIme = nowTime.format(date);
-		accListService.insert(accListDto);
-		
-	}
-
-	public void findUserInfo() {
+	public int findUserInfo() {
 		this.printBuyerList();
 
 		System.out.println("조회할 고객ID를 입력하세요");
@@ -186,7 +206,7 @@ public class BankService {
 
 		if (buyerDto == null) {
 			System.out.println("고객ID 가 없습니다");
-			return;
+			return 0;
 		} else {
 			System.out.println(Line.sLine(100));
 			System.out.printf("고객ID :  %s\n", buyerDto.buId);
@@ -199,7 +219,7 @@ public class BankService {
 		List<AccDto> accList = accService.findByBuId(strBuId);
 		if (accList.isEmpty()) {
 			System.out.println("고객의 계좌정보가 없습니다");
-			return;
+			return 0;
 		} else {
 			System.out.println(Line.sLine(100));
 			System.out.println("계좌번호\t구분\t잔액");
@@ -220,7 +240,7 @@ public class BankService {
 			}
 			System.out.println(Line.sLine(100));
 		}
-
+		return 1;
 
 	}
 

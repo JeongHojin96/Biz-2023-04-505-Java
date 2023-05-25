@@ -10,11 +10,14 @@ import com.callor.bank.models.AccListDto;
 import com.callor.bank.service.AccListService;
 
 public class AccListServiceImplV1 implements AccListService {
+	
+	protected AccServiceImplV1 accService;
 
 	protected Connection dbConn;
 
 	public AccListServiceImplV1() {
 		dbConn = DBConnection.getDBConn();
+		accService = new AccServiceImplV1();
 	}
 
 	public List<AccListDto> selectAll() {
@@ -51,7 +54,7 @@ public class AccListServiceImplV1 implements AccListService {
 			// 쿼리 실행하는 method
 			// SELECT : executeQuery(),
 			// INSERT, UPDATE, DELETE : executeUpdate()
-			pStr.executeUpdate();
+			return pStr.executeUpdate();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -75,6 +78,7 @@ public class AccListServiceImplV1 implements AccListService {
 	}
 
 	public int update(AccListDto dto) {
+		
 		return 0;
 	}
 

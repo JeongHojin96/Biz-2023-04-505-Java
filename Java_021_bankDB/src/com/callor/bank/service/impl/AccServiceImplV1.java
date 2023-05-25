@@ -12,6 +12,8 @@ import com.callor.bank.config.DBContract;
 import com.callor.bank.models.AccDto;
 import com.callor.bank.service.AccService;
 
+import oracle.jdbc.proxy.annotation.Pre;
+
 public class AccServiceImplV1 implements AccService {
 
 	// DB 에 연결 session 구축하는 도구
@@ -73,24 +75,28 @@ public class AccServiceImplV1 implements AccService {
 
 	@Override
 	public AccDto findById(String acNum) {
-		String sql = " SELECT acNum, acDiv,acBuId,acBalance " + " FROM tbl_acc " + " WHERE acNum = ? ";
+			String sql = " SELECT acNum, acDiv,acBuId,acBalance " 
+						+ " FROM tbl_acc " 
+						+ " WHERE acNum = ? ";
 
-		PreparedStatement pStr;
-		try {
-			pStr = dbConn.prepareStatement(sql);
-			ResultSet result = pStr.executeQuery();
+			PreparedStatement pStr;
+			try {
+				pStr = dbConn.prepareStatement(sql);
+				pStr.setString(1, acNum);
+				
+				ResultSet result = pStr.executeQuery();
 
-			if (result.next()) {
-				return result2Dto(result);
+				if (result.next()) {
+					return result2Dto(result);
+				}
+				result.close();
+				pStr.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			result.close();
-			pStr.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-		return null;
+			return null;
 	}
 
 	public int insert(AccDto dto) {
@@ -112,13 +118,30 @@ public class AccServiceImplV1 implements AccService {
 		return 0;
 	}
 
+	
+
 	public int update(AccDto dto) {
+		String sql = " UPDATE tbl_acc " + " SET " + " acDiv =  ? ," + " acBuId = ? ," + " acBalance = ? "
+				+ " WHERE acNum = ? ";
+
+		try {
+			PreparedStatement pStr = dbConn.prepareStatement(sql);
+			pStr.setString(1, dto.acDiv);
+			pStr.setString(2, dto.acBuId);
+			pStr.setInt(3, dto.acBalance);
+			pStr.setString(4, dto.acNum);
+			return pStr.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
 	public List<AccDto> findByBuId(String acBuId) {
 
-		String sql = " SELECT acNum, acDiv,acBuId,acBalance " + " FROM tbl_acc " + " WHERE acBuId = ? "
+		String sql = " SELECT acNum, acDiv, acBuId, acBalance " + " FROM tbl_acc " + " WHERE acBuId = ? "
 				+ " ORDER BY acNum ";
 
 		PreparedStatement pStr;
@@ -149,8 +172,10 @@ public class AccServiceImplV1 implements AccService {
 			ResultSet result = pStr.executeQuery();
 			if (result.next()) {
 				String maxNum = result.getString(1);
-				if(maxNum == null) return "0";
-				else return maxNum;
+				if (maxNum == null)
+					return "0";
+				else
+					return maxNum;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
