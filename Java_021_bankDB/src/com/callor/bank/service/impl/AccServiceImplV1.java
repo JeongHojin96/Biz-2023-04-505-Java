@@ -60,7 +60,7 @@ public class AccServiceImplV1 implements AccService {
 	@Override
 	public List<AccDto> selectAll() {
 
-		String sql = " SELECT acNum, acDiv,acBuId,acBalance " + " FROM tbl_acc " + " ORDER BY acNum ";
+		String sql = " SELECT acNum, acDiv, acBuId, acBalance " + " FROM tbl_acc " + " ORDER BY acNum ";
 
 		try {
 			PreparedStatement pStr = dbConn.prepareStatement(sql);
