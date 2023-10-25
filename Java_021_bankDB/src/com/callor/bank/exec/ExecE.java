@@ -30,6 +30,7 @@ public class ExecE {
 
 			int intSelect = 0;
 			try {
+				
 				intSelect = Integer.valueOf(strSelect);
 			} catch (Exception e) {
 				System.out.printf("업무 선택을 잘못 하였습니다(%s).", strSelect);

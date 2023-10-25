@@ -135,4 +135,10 @@ public class StudentServiceImplV1 implements StudentService {
 		return null;
 	}
 
+	@Override
+	public void deleteStudent() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

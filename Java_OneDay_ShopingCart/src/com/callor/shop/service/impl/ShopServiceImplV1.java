@@ -21,14 +21,12 @@ public class ShopServiceImplV1 {
 	protected final BuyerService bySer;
 	protected final ProductService pdSer;
 	protected final IolistService ioSer;
-
 	public ShopServiceImplV1() {
 		bySer = new BuyerServiceImplV1();
 		pdSer = new ProductServiceImplV1();
 		ioSer = new IolistServiceImplV1();
 		scan = new Scanner(System.in);
 	}
-
 	public void printProductList() {
 		pdList = pdSer.selectAll();
 		System.out.println("=".repeat(100));
@@ -44,7 +42,6 @@ public class ShopServiceImplV1 {
 			System.out.printf("%s\n", pdDto.pOPrice);
 		}
 	}
-
 	public void insertProduct() {
 		System.out.println("=".repeat(100));
 		System.out.println("상품정보 등록 및 수정[동일 상품코드 입력시 자동으로 상품정보를 수정합니다]");
@@ -54,10 +51,8 @@ public class ShopServiceImplV1 {
 		while (true) {
 			System.out.println("상품코드[10자 이내] >> ");
 			strCode = scan.nextLine();
-			if (strCode.length() > 10)
-				continue;
-			else if (strCode.length() > 0 && strCode.length() <= 10)
-				break;
+			if (strCode.length() > 10) continue;
+			else if (strCode.length() > 0 && strCode.length() <= 10) break;
 		}
 		int dtoNull = 0;
 		if (!(pdSer.findByCode(strCode) == null)) {
@@ -76,10 +71,8 @@ public class ShopServiceImplV1 {
 		String strIPrice = scan.nextLine();
 		pdDto.pIPrice = Integer.valueOf(strIPrice);
 		pdDto.pOPrice = pdDto.pIPrice + (int) Math.round((pdDto.pIPrice * 0.22 / 10.0) * 10);
-		if (dtoNull == 0)
-			pdSer.insert(pdDto);
-		else if (dtoNull == 1)
-			pdSer.update(pdDto);
+		if (dtoNull == 0) pdSer.insert(pdDto);
+		else if (dtoNull == 1) pdSer.update(pdDto);
 		System.out.println("완료");
 	}
 
@@ -146,28 +139,28 @@ public class ShopServiceImplV1 {
 		ioDto.ioDate = today.format(date);
 		SimpleDateFormat nowTime = new SimpleDateFormat("HH:mm:ss");
 		ioDto.ioTime = nowTime.format(date);
-	
-			System.out.print("고객 ID 입력 >> ");
-			String strId = scan.nextLine();
-			BuyerDto byDto = bySer.findById(strId);
-			if ( byDto == null)
-				System.out.println("고객이 존재하지 않음");
-			else if (!(bySer.findById(strId) == null)) {
-				ioDto.ioBuid = strId;
-				System.out.print("상품 CODE 입력 >> ");
-				String strCode = scan.nextLine();
-				ProductDto pdDto = pdSer.findByCode(strCode);
-				if (pdDto == null)
-					System.out.println("상품이 존재하지 않음");
-				else if (!(pdDto == null)) {
-					ioDto.ioPCode = strCode;
-					System.out.print("상품 갯수 입력 >> ");
-					String strQuan = scan.nextLine();
-					ioDto.ioQuan = Integer.valueOf(strQuan);
-					ioDto.ioPrice = pdDto.pOPrice;
-					ioSer.insert(ioDto);
-				}
+
+		System.out.print("고객 ID 입력 >> ");
+		String strId = scan.nextLine();
+		BuyerDto byDto = bySer.findById(strId);
+		if (byDto == null)
+			System.out.println("고객이 존재하지 않음");
+		else if (!(bySer.findById(strId) == null)) {
+			ioDto.ioBuid = strId;
+			System.out.print("상품 CODE 입력 >> ");
+			String strCode = scan.nextLine();
+			ProductDto pdDto = pdSer.findByCode(strCode);
+			if (pdDto == null)
+				System.out.println("상품이 존재하지 않음");
+			else if (!(pdDto == null)) {
+				ioDto.ioPCode = strCode;
+				System.out.print("상품 갯수 입력 >> ");
+				String strQuan = scan.nextLine();
+				ioDto.ioQuan = Integer.valueOf(strQuan);
+				ioDto.ioPrice = pdDto.pOPrice;
+				ioSer.insert(ioDto);
 			}
+		}
 	}
 
 	public void printAllList() {

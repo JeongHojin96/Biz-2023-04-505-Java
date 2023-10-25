@@ -16,7 +16,8 @@ public class ShopExec {
 			System.out.println("상품관리");
 			System.out.println("-".repeat(100));
 			System.out.println("\t1. 상품리스트");
-			System.out.println("\t2. 상품등록 및 수정");
+			System.out.println("\t2. 상품등록 및 수정"
+					+ "");
 			System.out.println("-".repeat(100));
 			System.out.println("\t3. 고객리스트");
 			System.out.println("\t4. 고객등록 및 수정");
@@ -43,7 +44,7 @@ public class ShopExec {
 			else if (intSelect == 2)shopSer.insertProduct();
 			else if (intSelect == 3)shopSer.printBuyerList();
 			else if (intSelect == 4)shopSer.insertBuyer();
-			else if (intSelect == 5)hopSer.insertIolist();
+			else if (intSelect == 5)shopSer.insertIolist();
 			else if (intSelect == 6)shopSer.printByBuyerList();
 			else if (intSelect == 7) {
 				shopSer.printAllList();
